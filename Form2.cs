@@ -32,11 +32,30 @@ namespace test
             conn.Close();
 
         }
+        void fillgridViwe()
+        {
+            conn.Open();
+            String q = "select * from Emps_info";
+            SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
+            DataTable datatable = new DataTable();
+
+
+            adapter.Fill(datatable);
+            //
+            dataGridView1.DataSource = datatable;
+
+            conn.Close();
+
+        }
+
         public Employees_info()
         {
             InitializeComponent();
             fillcombo();
+            fillgridViwe(); 
         }
+      public  String gender = "Not Set", hoppy = "Not Set";
+
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
@@ -70,7 +89,7 @@ namespace test
 
         private void btnadd_Click(object sender, EventArgs e)
         {
-            String gender = "Not Set", hoppy = "Not Set";
+
             // Check if the the are andy selected
             if (Rdm.Checked == true)
             {
@@ -81,17 +100,89 @@ namespace test
             if (sport.Checked == true)
             {
                 hoppy = "Sports";
-            }
-            if(reading.Checked == true)
+            }else if(reading.Checked == true)
             {
                 hoppy = "Reading";
-            };
+            }
+            else
+            {
+                hoppy = "Sports & Reading";
+            }
+            if (textID.Text == "" || textFname.Text == " " || textLname.Text == " " || textSname.Text == "")
+            {
+                MessageBox.Show("Plaze fill All Data");
+                textID.Clear();
+                textFname.Clear();
+            }
+            else
+            {
 
             String q = "insert into Emps_info values ('"+ textID.Text + "' , '" + textFname.Text + "' , '" + textSname.Text + "' , '" + textLname.Text + "'  , '" + DOB.Value + "' ,'" + CombNat.Text + "' ,'" + gender + "','" + hoppy + "')";
             SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
             DataTable datatable = new DataTable();
             adapter.Fill(datatable);
+            fillgridViwe();
 
+                textID.Clear();
+                textFname.Clear();
+                textLname.Clear();
+                textSname.Clear();
+                MessageBox.Show("Employe has bee Add");
+            }
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender,DataGridViewCellEventArgs e)
+        {
+            int rowIndex = dataGridView1.CurrentRow.Index;
+            textID.Text = (String)dataGridView1[0, rowIndex].Value;
+            textFname.Text = (String)dataGridView1[1, rowIndex].Value;
+            textSname.Text = (String)dataGridView1[2, rowIndex].Value;
+            textLname.Text = (String)dataGridView1[3, rowIndex].Value;
+            DOB.Value = (DateTime)dataGridView1[4, rowIndex].Value;
+            CombNat.Text = (String)dataGridView1[5, rowIndex].Value;
+
+           if(  (String)dataGridView1[6, rowIndex].Value == "Male")
+            {
+                Rdm.Checked = true;
+            }
+            else
+            {
+                Rdm.Checked = false;
+
+            }
+
+            if ((String)dataGridView1[7, rowIndex].Value == "Sports")
+            {
+                sport.Checked =true;
+            }
+            else if ( (String)dataGridView1[7, rowIndex].Value == "Reading")
+            {
+                reading.Checked = true;
+
+            }else if ((String)dataGridView1[7, rowIndex].Value == "Sports & Reading")
+            {
+                reading.Checked = true;
+                sport.Checked = true;
+
+            }
+            else
+            {
+                reading.Checked = false;
+                sport.Checked = false;
+            }
+
+
+
+
+        }
+
+        private void btnupdate_Click(object sender, EventArgs e)
+        {
+            String q = "Update Emps_info set Fname =  '" + textFname.Text + "' , Sname = '" + textSname.Text + "' ,  Lname = '" + textLname.Text + "'  , DOB = '" + DOB.Value + "' , Nationallty =  '" + CombNat.Text + "' ,Gender = '" + gender + "',Hobbies = '" + hoppy + "' , where ID =  '" + textID.Text + "')";
+            SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
+            DataTable datatable = new DataTable();
+            adapter.Fill(datatable);
 
         }
     }
