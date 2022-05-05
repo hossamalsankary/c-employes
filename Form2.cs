@@ -116,18 +116,27 @@ namespace test
             }
             else
             {
+                try
+                {
+                    String q = "insert into Emps_info values ('" + textID.Text + "' , '" + textFname.Text + "' , '" + textSname.Text + "' , '" + textLname.Text + "'  , '" + DOB.Value + "' ,'" + CombNat.Text + "' ,'" + gender + "','" + hoppy + "')";
+                    SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
+                    DataTable datatable = new DataTable();
+                    adapter.Fill(datatable);
+                    fillgridViwe();
 
-            String q = "insert into Emps_info values ('"+ textID.Text + "' , '" + textFname.Text + "' , '" + textSname.Text + "' , '" + textLname.Text + "'  , '" + DOB.Value + "' ,'" + CombNat.Text + "' ,'" + gender + "','" + hoppy + "')";
-            SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
-            DataTable datatable = new DataTable();
-            adapter.Fill(datatable);
-            fillgridViwe();
+                    textID.Clear();
+                    textFname.Clear();
+                    textLname.Clear();
+                    textSname.Clear();
+                    MessageBox.Show("Employe has bee Add");
+                }
+                catch {
+                    MessageBox.Show("Change the ID Filld");
 
-                textID.Clear();
-                textFname.Clear();
-                textLname.Clear();
-                textSname.Clear();
-                MessageBox.Show("Employe has bee Add");
+                }
+
+
+
             }
 
         }
@@ -177,13 +186,26 @@ namespace test
 
         }
 
-        private void btnupdate_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
-            String q = "Update Emps_info set Fname =  '" + textFname.Text + "' , Sname = '" + textSname.Text + "' ,  Lname = '" + textLname.Text + "'  , DOB = '" + DOB.Value + "' , Nationallty =  '" + CombNat.Text + "' ,Gender = '" + gender + "',Hobbies = '" + hoppy + "' , where ID =  '" + textID.Text + "')";
+            String q = "Delete from Emps_info where ID ='" + textID.Text + "' ";
             SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
             DataTable datatable = new DataTable();
             adapter.Fill(datatable);
+            MessageBox.Show("Deleted");
 
+            fillgridViwe();
+        }
+
+        private void btnupdate_Click(object sender, EventArgs e)
+        {
+            String q = "Update Emps_info set Fname =  '" + textFname.Text + "' , Sname = '" + textSname.Text + "' ,  Lname = '" + textLname.Text + "'  , DOB = '" + DOB.Value + "' , Nationality =  '" + CombNat.Text + "' ,Gender = '" + gender + "',Hobbies = '" + hoppy + "' where ID ='" + textID.Text + "'";
+            SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
+            DataTable datatable = new DataTable();
+            adapter.Fill(datatable);
+            MessageBox.Show("Update");
+
+            fillgridViwe();
         }
     }
 }

@@ -7,12 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using test;
 
 namespace test
 {
 
     public partial class Form1 : Form
     {
+
         SqlConnection conn = new SqlConnection("server=SQLNCLIRDA11;Data Source=DESKTOP-467C815\\HOSSAM;Integrated Security=SSPI;Initial Catalog=test");
 
         
@@ -61,7 +63,10 @@ namespace test
             {
 
                 MessageBox.Show(" تم تسجيل الدخول بنجاح");
+                this.Hide();
 
+                Employees_info open = new Employees_info();
+                open.Show();
             }
             else
             {
