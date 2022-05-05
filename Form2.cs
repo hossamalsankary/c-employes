@@ -21,7 +21,6 @@ namespace test
             String q = "select * from Nationalities";
             SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
             DataTable datatable = new DataTable();
-            DataSet sadatset = new DataSet();
 
 
             adapter.Fill(datatable);
@@ -67,6 +66,33 @@ namespace test
         private void CombNat_SelectedIndexChanged(object sender, EventArgs e)
         {
          
+        }
+
+        private void btnadd_Click(object sender, EventArgs e)
+        {
+            String gender = "Not Set", hoppy = "Not Set";
+            // Check if the the are andy selected
+            if (Rdm.Checked == true)
+            {
+                gender = "Male";
+            } else {
+                gender = "Famel";
+                    };
+            if (sport.Checked == true)
+            {
+                hoppy = "Sports";
+            }
+            if(reading.Checked == true)
+            {
+                hoppy = "Reading";
+            };
+
+            String q = "insert into Emps_info values ('"+ textID.Text + "' , '" + textFname.Text + "' , '" + textSname.Text + "' , '" + textLname.Text + "'  , '" + DOB.Value + "' ,'" + CombNat.Text + "' ,'" + gender + "','" + hoppy + "')";
+            SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
+            DataTable datatable = new DataTable();
+            adapter.Fill(datatable);
+
+
         }
     }
 }
