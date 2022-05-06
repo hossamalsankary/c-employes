@@ -65,7 +65,7 @@ namespace test
                 MessageBox.Show(" تم تسجيل الدخول بنجاح");
                 this.Hide();
 
-                Employees_info open = new Employees_info();
+                mobile_shop open = new mobile_shop();
                 open.Show();
             }
             else

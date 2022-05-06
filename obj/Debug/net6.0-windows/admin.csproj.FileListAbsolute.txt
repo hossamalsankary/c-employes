@@ -1,6 +1,5 @@
 C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\admin.csproj.AssemblyReference.cache
 C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\test.Form1.resources
-C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\test.Employees_info.resources
 C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\admin.csproj.GenerateResource.cache
 C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\admin.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\admin.AssemblyInfoInputs.cache
@@ -23,3 +22,6 @@ C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\refint\admin.dll
 C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\admin.pdb
 C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\admin.genruntimeconfig.cache
 C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\ref\admin.dll
+C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\admin.Form3.resources
+C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\admin.Properties.Resources.resources
+C:\Users\root\source\repos\admin\obj\Debug\net6.0-windows\test.mobile_shop.resources

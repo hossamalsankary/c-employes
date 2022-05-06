@@ -11,14 +11,15 @@ using System.Data.SqlClient;
 
 namespace test
 {
-    public partial class Employees_info : Form
+    public partial class mobile_shop : Form
     {
-        SqlConnection conn = new SqlConnection("server=SQLNCLIRDA11;Data Source=DESKTOP-467C815\\HOSSAM;Integrated Security=SSPI;Initial Catalog=Employeess");
-
+        SqlConnection conn = new SqlConnection("server=SQLNCLIRDA11;Data Source=DESKTOP-467C815\\HOSSAM;Integrated Security=SSPI;Initial Catalog=mopile_shop");
+        String imgName = "";
+        String ImgUrl = "";
         void fillcombo()
         {
             conn.Open();
-            String q = "select * from Nationalities";
+            String q = "select * from brand";
             SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
             DataTable datatable = new DataTable();
 
@@ -27,7 +28,7 @@ namespace test
 //
             CombNat.DataSource = datatable;
 
-            CombNat.DisplayMember = "Nationality";
+            CombNat.DisplayMember = "brand";
 
             conn.Close();
 
@@ -35,7 +36,7 @@ namespace test
         void fillgridViwe()
         {
             conn.Open();
-            String q = "select * from Emps_info";
+            String q = "select * from Prodect_info_add";
             SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
             DataTable datatable = new DataTable();
 
@@ -48,13 +49,13 @@ namespace test
 
         }
 
-        public Employees_info()
+        public mobile_shop()
         {
             InitializeComponent();
             fillcombo();
             fillgridViwe(); 
         }
-      public  String gender = "Not Set", hoppy = "Not Set";
+        public String status = "Not Set";
 
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -93,45 +94,35 @@ namespace test
             // Check if the the are andy selected
             if (Rdm.Checked == true)
             {
-                gender = "Male";
+                status = "Available";
             } else {
-                gender = "Famel";
+                status = "UnAvailable";
                     };
-            if (sport.Checked == true)
-            {
-                hoppy = "Sports";
-            }else if(reading.Checked == true)
-            {
-                hoppy = "Reading";
-            }
-            else
-            {
-                hoppy = "Sports & Reading";
-            }
-            if (textID.Text == "" || textFname.Text == " " || textLname.Text == " " || textSname.Text == "")
+          
+            if (textID.Text == "" || Pname.Text == " " || Pname.Text == " " || des.Text == "")
             {
                 MessageBox.Show("Plaze fill All Data");
                 textID.Clear();
-                textFname.Clear();
+                Pname.Clear();
             }
             else
             {
                 try
                 {
-                    String q = "insert into Emps_info values ('" + textID.Text + "' , '" + textFname.Text + "' , '" + textSname.Text + "' , '" + textLname.Text + "'  , '" + DOB.Value + "' ,'" + CombNat.Text + "' ,'" + gender + "','" + hoppy + "')";
+                    String q = "insert into Prodect_info_add values ('" + textID.Text + "' , '" + Pname.Text + "' , '" + des.Text + "'  , '" + DOB.Value + "' ,'" + CombNat.Text + "' ,'" + status + "' ,'" + File.ReadAllBytes(ImgUrl) + "' ,'" + ImgUrl + "'  )";
                     SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
                     DataTable datatable = new DataTable();
                     adapter.Fill(datatable);
                     fillgridViwe();
 
                     textID.Clear();
-                    textFname.Clear();
-                    textLname.Clear();
-                    textSname.Clear();
+                    Pname.Clear();
+                    Pname.Clear();
+                    des.Clear();
                     MessageBox.Show("Employe has bee Add");
                 }
-                catch {
-                    MessageBox.Show("Change the ID Filld");
+                catch (Exception error){
+                    MessageBox.Show(error.Message);
 
                 }
 
@@ -145,13 +136,13 @@ namespace test
         {
             int rowIndex = dataGridView1.CurrentRow.Index;
             textID.Text = (String)dataGridView1[0, rowIndex].Value;
-            textFname.Text = (String)dataGridView1[1, rowIndex].Value;
-            textSname.Text = (String)dataGridView1[2, rowIndex].Value;
-            textLname.Text = (String)dataGridView1[3, rowIndex].Value;
+            Pname.Text = (String)dataGridView1[1, rowIndex].Value;
+            des.Text = (String)dataGridView1[2, rowIndex].Value;
+            Pname.Text = (String)dataGridView1[3, rowIndex].Value;
             DOB.Value = (DateTime)dataGridView1[4, rowIndex].Value;
             CombNat.Text = (String)dataGridView1[5, rowIndex].Value;
 
-           if(  (String)dataGridView1[6, rowIndex].Value == "Male")
+           if(  (String)dataGridView1[6, rowIndex].Value == "Unavailable")
             {
                 Rdm.Checked = true;
             }
@@ -161,25 +152,7 @@ namespace test
 
             }
 
-            if ((String)dataGridView1[7, rowIndex].Value == "Sports")
-            {
-                sport.Checked =true;
-            }
-            else if ( (String)dataGridView1[7, rowIndex].Value == "Reading")
-            {
-                reading.Checked = true;
-
-            }else if ((String)dataGridView1[7, rowIndex].Value == "Sports & Reading")
-            {
-                reading.Checked = true;
-                sport.Checked = true;
-
-            }
-            else
-            {
-                reading.Checked = false;
-                sport.Checked = false;
-            }
+        
 
 
 
@@ -188,7 +161,7 @@ namespace test
 
         private void button3_Click(object sender, EventArgs e)
         {
-            String q = "Delete from Emps_info where ID ='" + textID.Text + "' ";
+            String q = "Delete from Prodect_info_add where ID ='" + textID.Text + "' ";
             SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
             DataTable datatable = new DataTable();
             adapter.Fill(datatable);
@@ -197,15 +170,51 @@ namespace test
             fillgridViwe();
         }
 
+        private void Employees_info_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void btnupdate_Click(object sender, EventArgs e)
         {
-            String q = "Update Emps_info set Fname =  '" + textFname.Text + "' , Sname = '" + textSname.Text + "' ,  Lname = '" + textLname.Text + "'  , DOB = '" + DOB.Value + "' , Nationality =  '" + CombNat.Text + "' ,Gender = '" + gender + "',Hobbies = '" + hoppy + "' where ID ='" + textID.Text + "'";
+            String q = "Update Prodect_info_add set Pname =  '" + Pname.Text + "' , Description = '" + des.Text + "'  , Pdate = '" + DOB.Value + "' , Brand =  '" + CombNat.Text + "' ,Status = '" + status + "' where ID ='" + textID.Text + "'";
             SqlDataAdapter adapter = new SqlDataAdapter(q, conn);
             DataTable datatable = new DataTable();
             adapter.Fill(datatable);
             MessageBox.Show("Update");
 
             fillgridViwe();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Select_img_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Images|*.jpg;*.png;*.gif;.bmp";
+            of.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            of.FilterIndex = 0;
+            if (of.ShowDialog() == DialogResult.OK)
+            {
+                imgName = of.FileName;
+                ImgUrl = imgName;
+
+                pictureBox.Image = Image.FromFile(of.FileName);
+            }
+        }
+       
+
+        private void pictureBox_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
